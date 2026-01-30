@@ -1,0 +1,7 @@
+CRUD Opration
+
+create - add data - POST
+Read - Get data - GET
+Update - Change data - PUT
+Delete - remove data - DELETE
+

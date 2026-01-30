@@ -1,40 +1,40 @@
-const express = require('express')
-const app = express()
-const port = 8080
+const express = require("express");
+const app = express();
+const port = 8080;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-//get the data
-app.get("/users",(req,res)=>{
-    res.json([
-        { id:1, name: "Sarha"},
-        { id:2, name: "Safari"},
-
-    ])})
-
-//post the data
+// middleware
 app.use(express.json());
 
-app.post("/add-user",(req,res)=>{
-    console.log(req.body);
-    res.send("User Recived")
-
-})
-
+// temporary database
 let users = [];
-app.post("/users",(req,res)=>{
-    users.push(req.body)
-    res.json(users)
-})
 
-app.get("/users",(req,res)=>{
-    res.json(users)
-})
+// home route
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
+// CREATE user
+app.post("/users", (req, res) => {
+  users.push(req.body);
+  res.json(users);
+});
 
+// READ users
+app.get("/users", (req, res) => {
+  res.json(users);
+});
 
+// UPDATE user
+app.put("/users/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+
+  users = users.map(user =>
+    user.id === id ? { ...user, ...req.body } : user
+  );
+
+  res.json(users);
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Server running on port ${port}`);
+});
